@@ -1,37 +1,30 @@
 
-
-
-export const initialState = {
-    item: 'Learn about reducers',
+export const initialState = [{
+    todo: '',
     completed: false,
-    id: 3892987589
-  }
+    id:Math.random()
+}]
 
-const reducer = (state, action) => {
-    //Switch statement
-    //if or else if blocks become cases
-    switch(action.type){
+export function reducer(state, action) {
+
+    //Actions
+    switch(action.type) {
+        case 'ADD_TODO':
+            return [  //confused about spreading here
+                ...state,
+                action.payload // this matches dispatched payload in app.js
+            ]
+        case 'COMPLETED_TODO':
+            return state.map((item) =>{
+                //ternary operator
+                return item.id === action.payload ? {...item, completed: !item.completed}:item 
+             }) 
+
+        case 'CLEAR_COMPLETED_TODO':
+            return state.filter((item) => !item.completed)
         
-       case "Add new Todo":
-           return {
-               ...state,
-               id:state.id++               
-           }
-       case "Clear Todos":
-           return {
-           ...state, 
-           completed: false           
-           }
-
-       case "Toggle todo" :
-           return {
-               ...state, 
-               completed: !state.completed
-           }   
-           
-       default:
-           return state;    
-    }   
+        default:
+            return state    
+    }
 }
 
-export default reducer;

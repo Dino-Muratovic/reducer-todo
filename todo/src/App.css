@@ -1,5 +1,8 @@
 .App {
   text-align: center;
+  background-color: blue;
+  margin: 0 auto;
+  margin-top:25%;
 }
 
 .App-logo {
@@ -35,4 +38,8 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.complete {
+  text-decoration: line-through;
 }

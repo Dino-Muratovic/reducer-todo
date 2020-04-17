@@ -1,45 +1,38 @@
-import React, { useState, useReducer} from 'react';
-import reducer, { initialState} from './reducers/reducer';
-import TodoList from './TodoList';
+import React, { useState } from 'react'
+
+export function TodoForm (props) {
+    const [form, setForm] = useState('')
 
 
+    //On form submit EVENT HANDLER
+    const onFormSubmit = (event) => {
+                //prevent the page from reloading
+                event.preventDefault();
+                //invoke the function addTodo from app.js and pass in form
+                props.addTodo(form)
+                //After submitting clear 
+                setForm('')
+    }
 
 
+     // on input change event handler here
+    const onInputChange = (event) => {
+        setForm(event.target.value)
+    }
 
-const ToDoForm = () => {
-//    
-const [todo, settodo] = useState('');  
+   return(
 
-const [state, dispatch] = useReducer(reducer, initialState);
-// console.log(`this is state object`, state);
-// console.log(`this is dispatch function`, dispatch);
-
-//Handle changes
-const handleChanges = e => {
-    settodo(e.target.value);
-  };
-
-  return (
-    <div className="form">    
-        <form>
-                <input
-                    type="text"
-                    name="todo"
-                    onChange={handleChanges}
-                    value={todo}
-                />  
-                <TodoList/>
-
-                <div>
-                     <p>{state.item}</p>
-                     <button onClick={() =>{dispatch({type: 'Add new Todo'})}}>Add</button> 
-                     <button onClick={() =>{dispatch({type: 'Clear Todos'})}}>Clear</button>  
-                </div>         
-         </form> 
-    </div>
-  );
+    <form onSubmit={onFormSubmit}>
+        <input 
+            name='todo'
+            placeholder='Add Todo'
+            value={form}
+            onChange={onInputChange}
+        />
+        <button type='submit'>Add Todo</button>
+    </form>
+   )
 }
 
 
 
-export default ToDoForm;
